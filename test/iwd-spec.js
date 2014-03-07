@@ -20,7 +20,8 @@ var getXcodeTraceTemplatePath = function () {
 };
 
 describe('test suite', function () {
-  var xcodeTraceTemplatePath;
+  var xcodeTraceTemplatePath,
+      instruments;
 
   before(function (done) {
     getXcodeTraceTemplatePath()
@@ -28,16 +29,16 @@ describe('test suite', function () {
       .nodeify(done);
   });
 
-  it('should work', function (done) {
+  it('should start', function (done) {
     console.log(xcodeTraceTemplatePath);
-    var instruments = new Instruments({
+    instruments = new Instruments({
       app: path.resolve(__dirname, 'assets/TestApp.app'), // TODO extract app package
       bootstrap: bootstrap,
       template: xcodeTraceTemplatePath,
       withoutDelay: true,
       xcodeVersion: '5.0.2',
       webSocket: null,
-      launchTimeout: 30000,
+      launchTimeout: 45000,
       flakeyRetries: true,
       logNoColors: false,
     });
@@ -46,5 +47,9 @@ describe('test suite', function () {
       should.not.exist(err);
       done();
     });
+  });
+
+  it('should shutdown', function (done) {
+    instruments.shutdown(done);
   });
 });
