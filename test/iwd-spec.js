@@ -55,7 +55,7 @@ describe('intruments tests', function () {
       withoutDelay: true,
       xcodeVersion: '5.1',
       webSocket: null,
-      launchTimeout: 20000,
+      launchTimeout: process.env.LAUNCH_TIMEOUT || 40000,
       flakeyRetries: true,
       logNoColors: false,
     });
